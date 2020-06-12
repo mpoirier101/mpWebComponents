@@ -1,0 +1,217 @@
+/** {
+	box-sizing: border-box;
+}*/
+
+html, body {
+	font-family: "Segoe UI",Arial,sans-serif;
+	font-size: 12px;
+	line-height: 1.5;
+}
+
+body {
+	width: 100%;
+	height: 100vh;
+	margin: 0;
+	padding: 0px;
+}
+
+h1 {
+	font-size: 36px;
+}
+
+h2 {
+	font-size: 30px;
+}
+
+h3 {
+	font-size: 24px;
+}
+
+h4 {
+	font-size: 20px;
+}
+
+h5 {
+	font-size: 18px;
+}
+
+h6 {
+	font-size: 16px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 400;
+	margin: 10px 0;
+}
+
+table {
+  width: 100%;
+}
+
+input:invalid {
+	color: red;
+}
+
+input:valid {
+	color: black;
+}
+
+svg > g > g:last-child {
+	pointer-events: none
+}
+
+.mp-padleft {
+	padding-left:8px;
+}
+
+.mp-bold {
+	font-weight: bold;
+}
+
+.mp-hspace {
+  margin: 0 8px 0 0;
+}
+
+.mp-padding-small {
+	padding: 8px 8px 8px 0 !important;
+}
+
+.mp-table-caption {
+	padding: 8px;
+	caption-side: bottom;
+	text-align: left;
+}
+
+.mp-serif {
+	font-family: serif;
+}
+
+.mp-wide {
+	letter-spacing: 4px;
+}
+
+.mp-header {
+	margin: 16px 0 0 0;
+	position: relative;
+	min-height: 40px;
+	z-index: 10;
+}
+
+.mp-header-item {
+	padding: 0 8px 0 0;
+	float: left;
+	width: auto;
+	border: none;
+	display: block;
+	outline: 0;
+}
+
+.mp-empty {
+	color: Gainsboro;
+}
+
+.mp-warning {
+	color: orange;
+}
+
+.mp-success {
+	color: green;
+}
+
+.mp-error {
+	color: red;
+}
+
+.mp-fileUpload {
+	position: relative;
+	overflow: hidden;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.mp-fileUpload {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+
+.mp-wrap-container {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: baseline;
+}
+
+.mp-nowrap-container {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: baseline;
+}
+
+.tabContent {
+	width: 100%;
+	height: auto;
+	margin: 0;
+}
+
+.mp-footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 8px 16px;
+	min-height: 30px;
+	z-index: 10;
+}
+
+
+#content1 {
+	width: 100%;
+	height: 100vh;
+	margin: 0;
+}
+
+#table {
+	position: relative;
+	z-index: 1;
+}
+
+#Logo {
+	margin: 3px 16px 0 8px;
+	padding: 0;
+	width: 140px;
+	align-self: flex-start;
+}
+
+#showSettings {
+	margin: 4px 16px 0 auto;
+}
+
+#settings {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 340px;
+	height: 99vh;
+	padding: 0.4em;
+	z-index: 9999;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+#tooltip {
+	z-index: 200;
+}
+
+.ui-widget {
+	font-family: "Segoe UI",Arial,sans-serif;
+	font-size: 13px;
+	line-height: 1.5;
+}
+
