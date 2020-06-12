@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Components</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" media="screen" href="normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="w3.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="mp.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="mp-components.css" />
+    <script src="dateRange.js"></script>
+    <script src="singleSelect.js"></script>
+    <script src="multiSelect.js"></script>
+    <script src="textBox.js"></script>
+    <script src="dialog.js"></script>
+  </head>
+  <body>
+    <h3>Test Components</h3>
+
+    <div id="header" class="mp-nowrap-container mp-header">
+      <mp-text id="fullname" caption="User:" placeholder="Full Name" class="mp-header-item"></mp-text>
+      <single-select id="sort" placeholder="Sort Order"  class="mp-header-item"></single-select>
+      <multi-select id="district" placeholder="All Districts" class="mp-header-item"></multi-select>
+      <date-range id="dates" caption="Debut,Fin" class="mp-header-item"></date-range>
+    </div>
+
+    <mp-dialog id="mpDialog" class="dialog">
+      <table>
+        <thead>
+          <tr><th class="w3-blue">header</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>main content: fills remaining space<br>
+              x<br>x<br>x<br>x<br>x<br>x<br>x<br>x<br>x<br>x<br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </mp-dialog>
+
+    <div><button id="btnDialog">Show Dialog</button>
+    </div>
+
+    <script>
+      orders = [
+        ["asc", "Ascending"],
+        ["desc", "Descending"],
+      ];
+
+      var districts = [
+        ["1", "District 1"],
+        ["2", "District 2"],
+        ["3", "District 3"],
+        ["4", "District 4"],
+        ["5", "District 5"],
+        ["6", "District 6"],
+        ["7", "District 7"],
+      ];
+
+      var selectedName = "Michel Poirier";
+      var selectedOrder = "asc";
+      var selectedDistrict = ["2","4"];
+      var selectedDates = ["2020-03-01", "2020-03-31"];
+
+      (function () {
+        var fname = document.getElementById("fullname");
+        fname.init(selectedName);
+        fname.addEventListener("changed", function (event) {
+          console.log("Changed event fired: " + event.detail.value);
+        });
+
+        var sort = document.getElementById("sort");
+        sort.init(orders, selectedOrder);
+        sort.addEventListener("changed", function (event) {
+          console.log("Changed event fired: " + event.detail.value);
+        });
+
+        var district = document.getElementById("district");
+        district.init(districts, selectedDistrict);
+        district.addEventListener("changed", function (event) {
+          console.log("Changed event fired: " + event.detail.join(","));
+        });
+
+        var dates = document.getElementById("dates");
+        dates.init(selectedDates);
+        dates.addEventListener("changed", function (event) {
+          console.log("Changed event fired: " + event.detail.join(","));
+        });
+
+        var dialog = document.getElementById("mpDialog");
+        dialog.init({
+          buttons: [Dialog.Buttons.Cancel, Dialog.Buttons.OK],
+          theme: "w3-blue",
+          title: "Dialog Title",
+        });
+
+        
+        dialog.addEventListener("closed", function (event) {
+          console.log("Closed event fired: " + event.detail.value);
+        });
+
+
+
+        var btn = document.getElementById("btnDialog");
+        btn.addEventListener("click", function (event) {
+          dialog.show();
+        });
+      })();
+    </script>
+  </body>
+</html>
