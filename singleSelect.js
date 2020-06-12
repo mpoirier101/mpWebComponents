@@ -14,8 +14,8 @@ class SingleSelect extends HTMLElement {
     var pattern = me.getAttribute("pattern") || "";
 
     me.shadow = me.attachShadow({ mode: "open" });
-    me.shadow.innerHTML = `<div class="singleSelect">${caption} <input type="text" readonly /><div class="singleSelect-content"></div></div>`;
-    me.shadow.innerHTML += `<link rel="stylesheet" type="text/css" href="mp-components.css">`;
+    me.shadow.innerHTML = `<link rel="stylesheet" type="text/css" href="/css/mp-components.css">`;
+    me.shadow.innerHTML += `<div class="singleSelect">${caption} <input type="text" readonly /><div class="singleSelect-content"></div></div>`;
     
     me.ChangedEvent = new CustomEvent("changed", {
       bubbles: true,

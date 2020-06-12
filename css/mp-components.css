@@ -112,10 +112,12 @@ input[type=text], input[type=date] {
   right: 0;
   padding: 10px;
   min-height: 30px;
+  text-align: right;
 }
 
 .dialogfooter button {
   margin-left: 8px;
+  display: inline-block;
 }
 
 .dialogclose {

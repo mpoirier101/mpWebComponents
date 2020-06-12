@@ -16,22 +16,29 @@ class Dialog extends HTMLElement {
     super();
   }
 
-  connectedCallback() {}
-
-  disconnectedCallback() {}
-
   init(options) {
     const me = this;
 
+    me.style.display = 'none';
     var title = options.title;
+    var themeUrl = options.themeUrl;
     var theme = options.theme;
     var buttons = options.buttons || [];
 
     me.shadow = me.attachShadow({ mode: "open" });
-    me.shadow.innerHTML = `<link rel="stylesheet" type="text/css" href="mp-components.css">`;
-    me.shadow.innerHTML += `<link rel="stylesheet" type="text/css" href="w3.css">`;
+    me.shadow.innerHTML = `<link rel="stylesheet" type="text/css" href="/css/mp-components.css">`;
+    if (themeUrl) {
+      me.shadow.innerHTML += `<link rel="stylesheet" type="text/css" href="${themeUrl}">`;
+    }
     me.shadow.innerHTML += `<div class="dialogheader ${theme}">${title}</div><span class="dialogclose ${theme}">&times;</span><div class="dialogcontent"><slot></slot></div><div class="dialogfooter ${theme}"></div>`;
-    
+
+    me.ClosedEvent = new CustomEvent("closed", {
+      bubbles: false,
+      cancelable: false,
+      composed: true,
+      detail: { value: "" },
+    });
+
     me.header = me.shadow.querySelector(".dialogheader");
     me.header.addEventListener("mousedown", function (e) {
       dragMouseDown(e);
@@ -42,62 +49,37 @@ class Dialog extends HTMLElement {
       closeDialog(e);
     });
 
-    //this.content = this.shadow.querySelector(".dialogcontent");
-
     me.footer = me.shadow.querySelector(".dialogfooter");
     if (buttons && buttons.length > 0) {
-      buttons.forEach(function (name, index) {
-
+      for (var i = 0; i < buttons.length; i++) {
+        var button = buttons[i];
         var btnName = "";
-
-        switch (name) {
-
+        switch (button) {
           case Dialog.Buttons.OK:
             btnName = "OK";
             break;
-          
           case Dialog.Buttons.Cancel:
             btnName = "Cancel";
             break;
-          
           default:
             btnName = "Unknown";
             break;
         }
-  
         var btn = document.createElement("button");
         var txt = document.createTextNode(btnName);
-        btn.appendChild(txt);
-        btn.value = name;
-        btn.setAttribute("class", "w3-right");
-        btn.addEventListener("click", buttonClick);
+        btn.append(txt);
+        btn.value = button;
+        btn.addEventListener("click", closeDialog);
         me.footer.append(btn);
-      });
-    }
-
-    function buttonClick(e) {
-      e = e || window.event;
-      e.preventDefault();
-      switch (e.srcElement.value) {
-
-        case Dialog.Buttons.OK:
-          console.log("OK pressed");
-          break;
-        
-        case Dialog.Buttons.Cancel:
-          console.log("Cancel pressed");
-          break;
-        
-        default:
-          console.log("Unknown pressed");
-          break;
       }
     }
 
     function closeDialog(e) {
       e = e || window.event;
       e.preventDefault();
+      me.ClosedEvent.detail.value = e.srcElement.value;
       me.style.display = 'none';
+      me.dispatchEvent(me.ClosedEvent);
     }
 
     function dragMouseDown(e) {

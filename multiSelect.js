@@ -13,10 +13,10 @@ class MultiSelect extends HTMLElement {
     var caption = me.getAttribute("caption") || "";
     var pattern = me.getAttribute("pattern") || "";
 
-		me.shadow = me.attachShadow({ mode: "open" });
-    me.shadow.innerHTML = `<div class="multiSelect">${caption} <input type="text" readonly /><div class="multiSelect-content"></div></div>`;
-    me.shadow.innerHTML += `<link rel="stylesheet" type="text/css" href="mp-components.css">`;
-
+    me.shadow = me.attachShadow({ mode: "open" });
+    me.shadow.innerHTML = `<link rel="stylesheet" type="text/css" href="/css/mp-components.css">`;
+    me.shadow.innerHTML += `<div class="multiSelect">${caption} <input type="text" readonly /><div class="multiSelect-content"></div></div>`;
+    
     me.ChangedEvent = new CustomEvent("changed", {
       bubbles: true,
       cancelable: false,

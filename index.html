@@ -3,10 +3,10 @@
   <head>
     <title>Components</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" media="screen" href="normalize.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="w3.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="mp.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="mp-components.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/w3.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/mp.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/mp-components.css" />
     <script src="dateRange.js"></script>
     <script src="singleSelect.js"></script>
     <script src="multiSelect.js"></script>
@@ -91,16 +91,14 @@
         var dialog = document.getElementById("mpDialog");
         dialog.init({
           buttons: [Dialog.Buttons.Cancel, Dialog.Buttons.OK],
+          themeUrl:'/css/w3.css',
           theme: "w3-blue",
           title: "Dialog Title",
         });
-
         
         dialog.addEventListener("closed", function (event) {
           console.log("Closed event fired: " + event.detail.value);
         });
-
-
 
         var btn = document.getElementById("btnDialog");
         btn.addEventListener("click", function (event) {
