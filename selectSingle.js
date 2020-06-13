@@ -6,13 +6,14 @@ class mpSelectSingle extends HTMLElement {
   // connectedCallback() {}
   // disconnectedCallback() {}
 
-  init(list, value) {
+  init(options) {
     const me = this;
 
-    var placeholder = me.getAttribute("placeholder") || "";
-    var caption = me.getAttribute("caption") || "";
-    var pattern = me.getAttribute("pattern") || "";
-    //var required = options.required || me.getAttribute("required") || "";
+    var placeholder = options.placeholder || me.getAttribute("placeholder") || "";
+    var caption = options.caption || me.getAttribute("caption") || "Date";
+    var value = options.value || me.getAttribute("value") || "";
+    var required = options.required || me.getAttribute("required") || "";
+    var list = options.list || (me.getAttribute("list") || "").split(',');
 
     me.shadow = me.attachShadow({ mode: "open" });
     me.shadow.innerHTML = `<link rel="stylesheet" type="text/css" href="/css/mp-components.css">`;
@@ -26,13 +27,14 @@ class mpSelectSingle extends HTMLElement {
     });
 
     me.ctrl = me.shadow.querySelector("input[type=text]");
-    me.ctrl.placeholder = placeholder;
+    if (placeholder) { me.ctrl.placeholder = placeholder; }
+    if (required) { me.ctrl.required = true; }
     me.ctrl.addEventListener("click", function (e) {
       toggleEvent(e);
     }, false);
 
     me.content = me.shadow.querySelector(".singleSelect-content");
-    me.content.addEventListener("click", function (e) {
+    me.content.addEventListener("mouseleave", function (e) {
       toggleEvent(e);
     }, false);
 
@@ -50,6 +52,10 @@ class mpSelectSingle extends HTMLElement {
         me.content.append(option);
       });
     }
+
+    me.content.addEventListener("click", function (e) {
+      toggleEvent(e);
+    }, false);
 
     function toggleEvent(e) {
       if (!me.content.classList.contains("show")) {

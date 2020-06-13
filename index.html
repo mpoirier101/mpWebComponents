@@ -74,19 +74,24 @@
           pattern: "",
           required: true,
         }); 
-
         fullname.addEventListener("changed", function (event) {
           console.log("Changed event fired: " + event.detail.value);
         });
 
         var sort = document.getElementById("sort");
-        sort.init(orders, selectedOrder);
+        sort.init({
+          list: orders, 
+          value: selectedOrder,
+        });
         sort.addEventListener("changed", function (event) {
           console.log("Changed event fired: " + event.detail.value);
         });
 
         var district = document.getElementById("district");
-        district.init(districts, selectedDistrict);
+        district.init({
+          list: districts, 
+          value: selectedDistrict,
+        });
         district.addEventListener("changed", function (event) {
           console.log("Changed event fired: " + event.detail.join(","));
         });
@@ -102,8 +107,6 @@
         date.addEventListener("changed", function (event) {
           console.log("Changed event fired: " + event.detail.value);
         });
-
-
 
         var dates = document.getElementById("dates");
         dates.init({

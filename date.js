@@ -9,10 +9,10 @@
   init(options) {
     const me = this;
 
-    var placeholder = options.placeholder || (me.getAttribute("placeholder") || "");
-    var caption = options.caption || (me.getAttribute("caption") || "Date");
+    var placeholder = options.placeholder || me.getAttribute("placeholder") || "";
+    var caption = options.caption || me.getAttribute("caption") || "Date";
     var pattern = options.pattern || me.getAttribute("pattern") || "\d{4}-\d{2}-\d{2}";
-    var value = options.value || (me.getAttribute("value") || "");
+    var value = options.value || me.getAttribute("value") || "";
     var required = options.required || me.getAttribute("required") || "";
 
 		me.shadow = me.attachShadow({ mode: "open" });

@@ -11,8 +11,8 @@ class mpDialog extends HTMLElement {
     super();
   }
   connectedCallback() {
-    this.style.display = 'none';
     this.classList.add("dialog");
+    this.style.display = 'none';
   }
   // disconnectedCallback() {}
 
@@ -31,9 +31,7 @@ class mpDialog extends HTMLElement {
 
     me.shadow = me.attachShadow({ mode: "open" });
     me.shadow.innerHTML = `<link rel="stylesheet" type="text/css" href="/css/mp-components.css">`;
-    if (themeUrl) {
-      me.shadow.innerHTML += `<link rel="stylesheet" type="text/css" href="${themeUrl}">`;
-    }
+    if (themeUrl) { me.shadow.innerHTML += `<link rel="stylesheet" type="text/css" href="${themeUrl}">`; }
     me.shadow.innerHTML += `<div class="dialogheader ${theme}">${title}</div><span class="dialogclose ${theme}">&times;</span><div class="dialogcontent"><slot></slot></div><div class="dialogfooter ${theme}"></div>`;
 
     me.ClosedEvent = new CustomEvent("closed", {
@@ -118,6 +116,11 @@ class mpDialog extends HTMLElement {
 
   show() {
     this.style.display = "flex";
+    // set dialog position to screen center
+    var availHeight = document.querySelector("body").clientHeight;
+    var availWidth = document.querySelector("body").clientWidth;
+    this.style.top = ((availHeight - this.offsetHeight) / 2) + "px";
+    this.style.left = ((availWidth - this.offsetWidth) / 2) + "px";
   }
 }
 window.customElements.define("mp-dialog", mpDialog);

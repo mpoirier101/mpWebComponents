@@ -6,12 +6,14 @@ class mpSelectMany extends HTMLElement {
   // connectedCallback() {}
   // disconnectedCallback() {}
 
-	init(list, selected) {
-		const me = this;
+  init(options) {
+    const me = this;
 
-    var placeholder = me.getAttribute("placeholder") || "";
-    var caption = me.getAttribute("caption") || "";
-    var pattern = me.getAttribute("pattern") || "";
+    var placeholder = options.placeholder || me.getAttribute("placeholder") || "";
+    var caption = options.caption || me.getAttribute("caption") || "Date";
+    var value = options.value || me.getAttribute("value") || "";
+    var required = options.required || me.getAttribute("required") || "";
+    var list = options.list || (me.getAttribute("list") || "").split(',');
 
     me.shadow = me.attachShadow({ mode: "open" });
     me.shadow.innerHTML = `<link rel="stylesheet" type="text/css" href="/css/mp-components.css">`;
@@ -26,7 +28,8 @@ class mpSelectMany extends HTMLElement {
     });
 
     me.ctrl = me.shadow.querySelector("input[type=text]");
-    me.ctrl.placeholder = placeholder;
+    if (placeholder) { me.ctrl.placeholder = placeholder; }
+    if (required) { me.ctrl.required = true; }
     me.ctrl.addEventListener("click", function (e) {
       toggleEvent(e);
     }, false);
@@ -37,52 +40,54 @@ class mpSelectMany extends HTMLElement {
     }, false);
 
     me.ChangedEvent.detail.length = 0;
-		var descriptions = [];
+    var descriptions = [];
 
-		list.forEach(function (item, i) {
-			var checkbox = document.createElement("input");
-			checkbox.type = "checkbox";
-			checkbox.id = me.id + item[0];
-			checkbox.name = me.id;
-			checkbox.value = item[0];
+    if (list && list.length > 0) {
+      list.forEach(function (item, i) {
+        var checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.id = me.id + item[0];
+        checkbox.name = me.id;
+        checkbox.value = item[0];
 
-			if (selected && selected.indexOf(item[0]) > -1) {
-				checkbox.checked = true;
-				me.ChangedEvent.detail.push(item[0]);
-				descriptions.push(item[1]);
-			}
+        if (value && value.indexOf(item[0]) > -1) {
+          checkbox.checked = true;
+          me.ChangedEvent.detail.push(item[0]);
+          descriptions.push(item[1]);
+        }
 
-			var label = document.createElement("label");
-			label.htmlFor = me.id + item[0];
-			label.innerText = item[1];
-			var div = document.createElement("div");
-			div.append(checkbox);
-			div.append(label);
-			me.content.append(div);
-		});
+        var label = document.createElement("label");
+        label.htmlFor = me.id + item[0];
+        label.innerText = item[1];
+        var div = document.createElement("div");
+        div.append(checkbox);
+        div.append(label);
+        me.content.append(div);
+      });
+    }
 
-		var desc = descriptions.join(", ");
-		me.ctrl.value = desc;
-		me.ctrl.title = desc;
+    var desc = descriptions.join(", ");
+    me.ctrl.value = desc;
+    me.ctrl.title = desc;
 
     function toggleEvent(e) {
-			if (!me.content.classList.contains("show")) {
-				me.content.classList.add("show");
-			} else {
-				me.ChangedEvent.detail.length = 0;
-				var descriptions = [];
-				var selected = me.shadow.querySelectorAll("input:checked");
-				selected.forEach((checkbox) => {
-					me.ChangedEvent.detail.push(checkbox.value);
-					descriptions.push(checkbox.nextElementSibling.textContent);
-				});
-				var desc = descriptions.join(", ");
-				me.ctrl.value = desc;
-				me.ctrl.title = desc;
-				me.dispatchEvent(me.ChangedEvent);
-				me.content.classList.remove("show");
-			}
-		}
-	}
+      if (!me.content.classList.contains("show")) {
+        me.content.classList.add("show");
+      } else {
+        me.ChangedEvent.detail.length = 0;
+        var descriptions = [];
+        var selected = me.shadow.querySelectorAll("input:checked");
+        selected.forEach((checkbox) => {
+          me.ChangedEvent.detail.push(checkbox.value);
+          descriptions.push(checkbox.nextElementSibling.textContent);
+        });
+        var desc = descriptions.join(", ");
+        me.ctrl.value = desc;
+        me.ctrl.title = desc;
+        me.dispatchEvent(me.ChangedEvent);
+        me.content.classList.remove("show");
+      }
+    }
+  }
 }
 window.customElements.define("mp-selectmany", mpSelectMany);

@@ -37,7 +37,7 @@ input[type=text], input[type=date] {
   z-index: 1;
   padding: 2px 4px 12px 2px;
 }
-.singleSelect-content div {
+.singleSelect-content option {
   position: relative;
   cursor: pointer;
   -webkit-appearance: checkbox;
