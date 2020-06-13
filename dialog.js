@@ -1,4 +1,4 @@
-class Dialog extends HTMLElement {
+class mpDialog extends HTMLElement {
 
   static get Buttons() {
     return {
@@ -7,22 +7,26 @@ class Dialog extends HTMLElement {
     }
   }
 
-  #pos1 = 0;
-  #pos2 = 0;
-  #pos3 = 0;
-  #pos4 = 0;
-
   constructor() {
     super();
   }
+  connectedCallback() {
+    this.style.display = 'none';
+    this.classList.add("dialog");
+  }
+  // disconnectedCallback() {}
 
   init(options) {
     const me = this;
 
-    me.style.display = 'none';
-    var title = options.title;
+    var pos1 = 0;
+    var pos2 = 0;
+    var pos3 = 0;
+    var pos4 = 0;
+  
+    var title = options.title || "";
     var themeUrl = options.themeUrl;
-    var theme = options.theme;
+    var theme = options.theme || "";
     var buttons = options.buttons || [];
 
     me.shadow = me.attachShadow({ mode: "open" });
@@ -45,9 +49,7 @@ class Dialog extends HTMLElement {
     });
 
     me.close = me.shadow.querySelector(".dialogclose");
-    me.close.addEventListener("click", function (e) {
-      closeDialog(e);
-    });
+    me.close.addEventListener("click", closeDialog);
 
     me.footer = me.shadow.querySelector(".dialogfooter");
     if (buttons && buttons.length > 0) {
@@ -55,10 +57,10 @@ class Dialog extends HTMLElement {
         var button = buttons[i];
         var btnName = "";
         switch (button) {
-          case Dialog.Buttons.OK:
+          case mpDialog.Buttons.OK:
             btnName = "OK";
             break;
-          case Dialog.Buttons.Cancel:
+          case mpDialog.Buttons.Cancel:
             btnName = "Cancel";
             break;
           default:
@@ -86,8 +88,8 @@ class Dialog extends HTMLElement {
       e = e || window.event;
       e.preventDefault();
       // get the mouse cursor position at startup:
-      me.#pos3 = e.clientX;
-      me.#pos4 = e.clientY;
+      pos3 = e.clientX;
+      pos4 = e.clientY;
       // release mouse when drag ends  
       document.onmouseup = closeDragElement;
       // call a function whenever the cursor moves:
@@ -98,13 +100,13 @@ class Dialog extends HTMLElement {
       e = e || window.event;
       e.preventDefault();
       // calculate the new cursor position:
-      me.#pos1 = me.#pos3 - e.clientX;
-      me.#pos2 = me.#pos4 - e.clientY;
-      me.#pos3 = e.clientX;
-      me.#pos4 = e.clientY;
+      pos1 = pos3 - e.clientX;
+      pos2 = pos4 - e.clientY;
+      pos3 = e.clientX;
+      pos4 = e.clientY;
       // set the element's new position:
-      me.style.top = (me.offsetTop - me.#pos2) + "px";
-      me.style.left = (me.offsetLeft - me.#pos1) + "px";
+      me.style.top = (me.offsetTop - pos2) + "px";
+      me.style.left = (me.offsetLeft - pos1) + "px";
     }
   
     function closeDragElement() {
@@ -117,6 +119,5 @@ class Dialog extends HTMLElement {
   show() {
     this.style.display = "flex";
   }
-
 }
-window.customElements.define("mp-dialog", Dialog);
+window.customElements.define("mp-dialog", mpDialog);

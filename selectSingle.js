@@ -1,17 +1,18 @@
-class SingleSelect extends HTMLElement {
-  static get observedAttributes() {
-    return ["value"];
-  }
+class mpSelectSingle extends HTMLElement {
 
   constructor() {
     super();
   }
+  // connectedCallback() {}
+  // disconnectedCallback() {}
 
-  load() {
+  init(list, value) {
     const me = this;
+
     var placeholder = me.getAttribute("placeholder") || "";
     var caption = me.getAttribute("caption") || "";
     var pattern = me.getAttribute("pattern") || "";
+    //var required = options.required || me.getAttribute("required") || "";
 
     me.shadow = me.attachShadow({ mode: "open" });
     me.shadow.innerHTML = `<link rel="stylesheet" type="text/css" href="/css/mp-components.css">`;
@@ -35,6 +36,21 @@ class SingleSelect extends HTMLElement {
       toggleEvent(e);
     }, false);
 
+    if (list && list.length > 0) {
+      me.content.innerHTML = "";
+      list.forEach(function (item, i) {
+        var option = document.createElement("option");
+        option.value = item[0];
+        option.text = item[1];
+        if (value == item[0]) {
+          me.ctrl.value = item[1];
+          me.ctrl.title = item[1];
+          me.ChangedEvent.detail.value = item[0];
+        }
+        me.content.append(option);
+      });
+    }
+
     function toggleEvent(e) {
       if (!me.content.classList.contains("show")) {
         me.content.classList.add("show");
@@ -50,37 +66,5 @@ class SingleSelect extends HTMLElement {
       }
     }
   }
-
-  get value() {
-    return this.ctrl.value;
-  }
-
-  connectedCallback() {
-    if (!this.shadow) {
-      this.load();
-    }
-  }
-
-  disconnectedCallback() {}
-
-  attributeChangedCallback(name, oldVal, newVal) {
-    this.value = newVal;
-  }
-
-  init(list, value) {
-    const me = this;
-    me.content.innerHTML = "";
-    list.forEach(function (item, i) {
-      var option = document.createElement("option");
-      option.value = item[0];
-      option.text = item[1];
-      if (value == item[0]) {
-        me.ctrl.value = item[1];
-        me.ctrl.title = item[1];
-        me.ChangedEvent.detail.value = item[0];
-      }
-      me.content.append(option);
-    });
-  }
 }
-window.customElements.define("single-select", SingleSelect);
+window.customElements.define("mp-select", mpSelectSingle);

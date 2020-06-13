@@ -1,14 +1,14 @@
-class MultiSelect extends HTMLElement {
-  static get observedAttributes() {
-    return ["value"];
-  }
-
+class mpSelectMany extends HTMLElement {
+  
   constructor() {
     super();
   }
+  // connectedCallback() {}
+  // disconnectedCallback() {}
 
-  load() {
-    const me = this;
+	init(list, selected) {
+		const me = this;
+
     var placeholder = me.getAttribute("placeholder") || "";
     var caption = me.getAttribute("caption") || "";
     var pattern = me.getAttribute("pattern") || "";
@@ -16,6 +16,7 @@ class MultiSelect extends HTMLElement {
     me.shadow = me.attachShadow({ mode: "open" });
     me.shadow.innerHTML = `<link rel="stylesheet" type="text/css" href="/css/mp-components.css">`;
     me.shadow.innerHTML += `<div class="multiSelect">${caption} <input type="text" readonly /><div class="multiSelect-content"></div></div>`;
+    //var required = options.required || me.getAttribute("required") || "";
     
     me.ChangedEvent = new CustomEvent("changed", {
       bubbles: true,
@@ -35,38 +36,6 @@ class MultiSelect extends HTMLElement {
       toggleEvent(e);
     }, false);
 
-    function toggleEvent(e) {
-			if (!me.content.classList.contains("show")) {
-				me.content.classList.add("show");
-			} else {
-				me.ChangedEvent.detail.length = 0;
-				var descriptions = [];
-				var selected = me.shadow.querySelectorAll("input:checked");
-				selected.forEach((checkbox) => {
-					me.ChangedEvent.detail.push(checkbox.value);
-					descriptions.push(checkbox.nextElementSibling.textContent);
-				});
-				var desc = descriptions.join(", ");
-				me.ctrl.value = desc;
-				me.ctrl.title = desc;
-				me.dispatchEvent(me.ChangedEvent);
-				me.content.classList.remove("show");
-			}
-		}
-	}
-
-  get value() {
-    return this.ctrl.value;
-  }
-
-  connectedCallback() {
-    if (!this.shadow) {
-      this.load();
-    }
-	}
-
-	init(list, selected) {
-		const me = this;
     me.ChangedEvent.detail.length = 0;
 		var descriptions = [];
 
@@ -95,6 +64,25 @@ class MultiSelect extends HTMLElement {
 		var desc = descriptions.join(", ");
 		me.ctrl.value = desc;
 		me.ctrl.title = desc;
+
+    function toggleEvent(e) {
+			if (!me.content.classList.contains("show")) {
+				me.content.classList.add("show");
+			} else {
+				me.ChangedEvent.detail.length = 0;
+				var descriptions = [];
+				var selected = me.shadow.querySelectorAll("input:checked");
+				selected.forEach((checkbox) => {
+					me.ChangedEvent.detail.push(checkbox.value);
+					descriptions.push(checkbox.nextElementSibling.textContent);
+				});
+				var desc = descriptions.join(", ");
+				me.ctrl.value = desc;
+				me.ctrl.title = desc;
+				me.dispatchEvent(me.ChangedEvent);
+				me.content.classList.remove("show");
+			}
+		}
 	}
 }
-window.customElements.define("multi-select", MultiSelect);
+window.customElements.define("mp-selectmany", mpSelectMany);
