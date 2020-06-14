@@ -43,6 +43,9 @@ class mpDialog extends HTMLElement {
       detail: { value: "" },
     });
 
+    if (width) { me.style.width = width; }
+    if (height) { me.style.height = height; }
+
     me.header = me.shadow.querySelector(".dialogheader");
     me.header.addEventListener("mousedown", function (e) {
       dragMouseDown(e);
@@ -79,7 +82,7 @@ class mpDialog extends HTMLElement {
     function closeDialog(e) {
       e = e || window.event;
       e.preventDefault();
-      me.ClosedEvent.detail.value = e.srcElement.value;
+      me.ClosedEvent.detail.value = e.srcElement.value || "";
       me.style.display = 'none';
       me.dispatchEvent(me.ClosedEvent);
     }
@@ -121,8 +124,10 @@ class mpDialog extends HTMLElement {
     // set dialog position to screen center
     var availHeight = document.querySelector("body").clientHeight;
     var availWidth = document.querySelector("body").clientWidth;
-    this.style.top = ((availHeight - this.offsetHeight) / 2) + "px";
-    this.style.left = ((availWidth - this.offsetWidth) / 2) + "px";
+    if (!this.style.top || !this.style.left) {
+      this.style.top = ((availHeight - this.offsetHeight) / 2) + "px";
+      this.style.left = ((availWidth - this.offsetWidth) / 2) + "px";
+    }
   }
 
   close() {
