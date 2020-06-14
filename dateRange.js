@@ -6,7 +6,7 @@
   // connectedCallback() {}
   // disconnectedCallback() {}
 
-  init(options) {
+  init(options = {}) {
     const me = this;
 
     var placeholders = options.placeholder || (me.getAttribute("placeholder") || "").split(',');

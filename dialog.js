@@ -16,7 +16,7 @@ class mpDialog extends HTMLElement {
   }
   // disconnectedCallback() {}
 
-  init(options) {
+  init(options = {}) {
     const me = this;
 
     var pos1 = 0;
@@ -24,7 +24,7 @@ class mpDialog extends HTMLElement {
     var pos3 = 0;
     var pos4 = 0;
   
-    var title = options.title || "";
+    var caption = options.caption || me.getAttribute("caption") || "Dialog";
     var themeUrl = options.themeUrl;
     var theme = options.theme || "";
     var buttons = options.buttons || [];
@@ -32,7 +32,7 @@ class mpDialog extends HTMLElement {
     me.shadow = me.attachShadow({ mode: "open" });
     me.shadow.innerHTML = `<link rel="stylesheet" type="text/css" href="/css/mp-components.css">`;
     if (themeUrl) { me.shadow.innerHTML += `<link rel="stylesheet" type="text/css" href="${themeUrl}">`; }
-    me.shadow.innerHTML += `<div class="dialogheader ${theme}">${title}</div><span class="dialogclose ${theme}">&times;</span><div class="dialogcontent"><slot></slot></div><div class="dialogfooter ${theme}"></div>`;
+    me.shadow.innerHTML += `<div class="dialogheader ${theme}">${caption}</div><span class="dialogclose ${theme}">&times;</span><div class="dialogcontent"><slot></slot></div><div class="dialogfooter ${theme}"></div>`;
 
     me.ClosedEvent = new CustomEvent("closed", {
       bubbles: false,

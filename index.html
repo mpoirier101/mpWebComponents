@@ -122,12 +122,13 @@
 
 
         var dialog = document.getElementById("dialog");
-        dialog.init({
-          buttons: [mpDialog.Buttons.Cancel, mpDialog.Buttons.OK],
-          themeUrl:'/css/w3.css',
-          theme: "w3-blue",
-          title: "Dialog Title",
-        });
+        dialog.init();
+        // dialog.init({
+        //   buttons: [mpDialog.Buttons.Cancel, mpDialog.Buttons.OK],
+        //   themeUrl:'/css/w3.css',
+        //   theme: "w3-blue",
+        //   title: "Dialog Title",
+        // });
         
         dialog.addEventListener("closed", function (event) {
           console.log("Closed event fired: " + event.detail.value);

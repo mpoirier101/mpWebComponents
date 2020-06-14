@@ -6,7 +6,7 @@
   // connectedCallback() {}
   // disconnectedCallback() {}
 
-  init(options) {
+  init(options = {}) {
     const me = this;
 
     var placeholder = options.placeholder || me.getAttribute("placeholder") || "";

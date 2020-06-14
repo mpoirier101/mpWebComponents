@@ -6,11 +6,11 @@ class mpSelectMany extends HTMLElement {
   // connectedCallback() {}
   // disconnectedCallback() {}
 
-  init(options) {
+  init(options = {}) {
     const me = this;
 
     var placeholder = options.placeholder || me.getAttribute("placeholder") || "";
-    var caption = options.caption || me.getAttribute("caption") || "Date";
+    var caption = options.caption || me.getAttribute("caption") || "";
     var value = options.value || me.getAttribute("value") || "";
     var required = options.required || me.getAttribute("required") || "";
     var list = options.list || (me.getAttribute("list") || "").split(',');
@@ -18,7 +18,6 @@ class mpSelectMany extends HTMLElement {
     me.shadow = me.attachShadow({ mode: "open" });
     me.shadow.innerHTML = `<link rel="stylesheet" type="text/css" href="/css/mp-components.css">`;
     me.shadow.innerHTML += `<div class="multiSelect">${caption} <input type="text" readonly /><div class="multiSelect-content"></div></div>`;
-    //var required = options.required || me.getAttribute("required") || "";
     
     me.ChangedEvent = new CustomEvent("changed", {
       bubbles: true,
