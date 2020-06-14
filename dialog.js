@@ -25,6 +25,8 @@ class mpDialog extends HTMLElement {
     var pos4 = 0;
   
     var caption = options.caption || me.getAttribute("caption") || "Dialog";
+    var width = options.width || me.getAttribute("width") || "200px";
+    var height = options.height || me.getAttribute("height") || "200px";
     var themeUrl = options.themeUrl;
     var theme = options.theme || "";
     var buttons = options.buttons || [];
@@ -121,6 +123,12 @@ class mpDialog extends HTMLElement {
     var availWidth = document.querySelector("body").clientWidth;
     this.style.top = ((availHeight - this.offsetHeight) / 2) + "px";
     this.style.left = ((availWidth - this.offsetWidth) / 2) + "px";
+  }
+
+  close() {
+    this.ClosedEvent.detail.value = "";
+    this.style.display = 'none';
+    this.dispatchEvent(this.ClosedEvent);
   }
 }
 window.customElements.define("mp-dialog", mpDialog);
