@@ -34,8 +34,8 @@ class mpDialog extends HTMLElement {
     me.shadow = me.attachShadow({ mode: "open" });
     me.shadow.innerHTML = `<link rel="stylesheet" type="text/css" href="/css/mp-components.css">`;
     if (themeUrl) { me.shadow.innerHTML += `<link rel="stylesheet" type="text/css" href="${themeUrl}">`; }
-    me.shadow.innerHTML += `<div class="dialogheader ${theme}">${caption}</div><span class="dialogclose ${theme}">&times;</span><div class="dialogcontent"><slot></slot></div><div class="dialogfooter ${theme}"></div>`;
-
+    me.shadow.innerHTML += `<div class="dialogheader ${theme}" part="header">${caption}</div><span class="dialogclose ${theme}">&times;</span><div class="dialogcontent" part="content"><slot></slot></div>`
+   
     me.ClosedEvent = new CustomEvent("closed", {
       bubbles: false,
       cancelable: false,
@@ -54,8 +54,14 @@ class mpDialog extends HTMLElement {
     me.close = me.shadow.querySelector(".dialogclose");
     me.close.addEventListener("click", closeDialog);
 
-    me.footer = me.shadow.querySelector(".dialogfooter");
     if (buttons && buttons.length > 0) {
+
+      me.footer = document.createElement("div");
+      me.footer.classList.add("dialogfooter");
+      me.footer.setAttribute("part", "footer");
+      if (theme) me.footer.classList.add(theme);
+      me.shadow.append(me.footer);
+
       for (var i = 0; i < buttons.length; i++) {
         var button = buttons[i];
         var btnName = "";

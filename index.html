@@ -120,7 +120,6 @@
           console.log("Changed event fired: " + event.detail.join(","));
         });
 
-
         var dialog = document.getElementById("dialog");
         dialog.init({
           buttons: [mpDialog.Buttons.Cancel, mpDialog.Buttons.OK],
@@ -130,6 +129,9 @@
           width: "400px",
           height: "400px",
         });
+
+        var hdr = document.querySelector('mp-dialog').shadowRoot.querySelector(".dialogheader");
+        hdr.style.color = "red";
         
         dialog.addEventListener("closed", function (event) {
           console.log("Closed event fired: " + event.detail.value);
@@ -141,5 +143,10 @@
         });
       })();
     </script>
+    <style>
+      mp-dialog::part(header) {
+        background-color: pink;
+      }
+    </style>
   </body>
 </html>
