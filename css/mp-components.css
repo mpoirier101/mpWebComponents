@@ -107,10 +107,6 @@ input[type=text], input[type=date] {
 }
 
 .dialogfooter {
-  /* position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0; */
   padding: 10px;
   min-height: 30px;
   text-align: right;
