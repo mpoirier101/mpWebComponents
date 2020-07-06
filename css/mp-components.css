@@ -1,8 +1,11 @@
 
+:focus {
+  outline: none;
+  outline-offset: 0;
+}
 input[type=text], input[type=date] {
   writing-mode: horizontal-tb !important;
   text-rendering: auto;
-  color: -internal-light-dark-color(black, white);
   letter-spacing: normal;
   word-spacing: normal;
   text-transform: none;
@@ -11,20 +14,24 @@ input[type=text], input[type=date] {
   display: inline-block;
   text-align: start;
   -webkit-appearance: textfield;
-  background-color: -internal-light-dark-color(white, black);
   -webkit-rtl-ordering: logical;
   cursor: pointer;
   margin: 0em;
   font: 400 12px "Segoe UI";
-  padding: 1px 0px;
-  border-width: 2px;
-  border-style: inset;
-  border-color: initial;
-  border-image: initial;
+  padding: 1px 2px;
+  border-width: 1px;
+  border-style: solid ;
+  border-color: gray;
+  border-image: none;
   height:20px;
   overflow: hidden;
   text-overflow: ellipsis;;
 }
+input:hover {
+  border-color: blue;
+}
+
+
 .singleSelect-content {
   display: none;
   position: absolute;
@@ -35,7 +42,7 @@ input[type=text], input[type=date] {
   white-space: nowrap;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
-  padding: 2px 4px 12px 2px;
+  padding: 2px 0;
 }
 .singleSelect-content option {
   position: relative;
@@ -43,10 +50,11 @@ input[type=text], input[type=date] {
   -webkit-appearance: checkbox;
   box-sizing: border-box;
   margin: 0;
-  padding: 0;
+  padding: 2px;
   border: 0;
   width: 100%;
 }
+
 .multiSelect-content {
   display: none;
   position: absolute;
@@ -79,6 +87,7 @@ input[type=text], input[type=date] {
 .multiSelect-content label {
   cursor: pointer;
 }
+
 .show {display: block;}
 .hide {display: none;}
 
