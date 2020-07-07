@@ -30,10 +30,8 @@ class mpSelectSingle extends HTMLElement {
     if (placeholder) { me.ctrl.placeholder = placeholder; }
     if (required) { me.ctrl.required = true; }
     me.ctrl.addEventListener("click", function (e) {
+      e.cancelBubble = true;
       toggleEvent(e);
-    }, false);
-    me.ctrl.addEventListener("focusout", function (e) {
-      deferCloseContent(e);
     }, false);
 
     me.content = me.shadow.querySelector(".singleSelect-content");
@@ -41,6 +39,7 @@ class mpSelectSingle extends HTMLElement {
       closeContent(e);
     }, false);
     me.content.addEventListener("click", function (e) {
+      e.cancelBubble = true;
       toggleEvent(e);
     }, false);
 
@@ -59,9 +58,11 @@ class mpSelectSingle extends HTMLElement {
       });
     }
 
-    function deferCloseContent(e) {
-      setTimeout(closeContent, 300);
-    }
+    window.addEventListener("click", function (e) {
+      if (e.target.id != me.id) {
+        closeContent(e);
+      }
+    }, false);
 
     function closeContent(e) {
       me.content.classList.remove("show");

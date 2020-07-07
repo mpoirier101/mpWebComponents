@@ -30,6 +30,7 @@ class mpSelectMany extends HTMLElement {
     if (placeholder) { me.ctrl.placeholder = placeholder; }
     if (required) { me.ctrl.required = true; }
     me.ctrl.addEventListener("click", function (e) {
+      e.cancelBubble = true;
       toggleEvent(e);
     }, false);
 
@@ -68,6 +69,16 @@ class mpSelectMany extends HTMLElement {
     var desc = descriptions.join(", ");
     me.ctrl.value = desc;
     me.ctrl.title = desc;
+
+    window.addEventListener("click", function (e) {
+      if (e.target.id != me.id) {
+        closeContent(e);
+      }
+    }, false);
+
+    function closeContent(e) {
+      me.content.classList.remove("show");
+    }
 
     function toggleEvent(e) {
       if (!me.content.classList.contains("show")) {
