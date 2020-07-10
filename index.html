@@ -201,6 +201,9 @@
           //data: members, // initialize with array
           //json: json, // initialize with JSON
         });
+        table.addEventListener("rowClick", function (event) {
+          console.log("Row Click event fired: " + event.detail.value);
+        });
 
         function loadXMLDoc() {
           var xhttp = new XMLHttpRequest();
