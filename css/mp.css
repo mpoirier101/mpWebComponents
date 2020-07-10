@@ -76,6 +76,11 @@ svg > g > g:last-child {
 	padding: 8px 8px 8px 0 !important;
 }
 
+.mp-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .mp-table-caption {
 	padding: 8px;
 	caption-side: bottom;

@@ -12,18 +12,21 @@
     <script src="selectMany.js"></script>
     <script src="textBox.js"></script>
     <script src="dialog.js"></script>
+    <script src="table.js"></script>
   </head>
   <body>
     <h3>Test Components</h3>
 
     <div id="header" class="mp-nowrap-container mp-header">
-      <mp-text id="fullname" placeholder="Full Name" class="mp-header-item"></mp-text>
-      <mp-select id="sort" placeholder="Sort Order"  class="mp-header-item"></mp-select>
-      <mp-selectmany id="district" placeholder="All Districts" class="mp-header-item"></mp-selectmany>
+      <mp-text id="fullname" class="mp-header-item"></mp-text>
+      <mp-select id="sort" class="mp-header-item"></mp-select>
+      <mp-selectmany id="district" class="mp-header-item"></mp-selectmany>
       <mp-date id="date" class="mp-header-item"></mp-date>
       <mp-daterange id="dates" class="mp-header-item"></mp-daterange>
       <button id="btnDialog" class="mp-header-item">Show Dialog</button>
     </div>
+
+    <mp-table id="members"></mp-table>
 
     <mp-dialog id="dialog">
       <table>
@@ -40,7 +43,6 @@
       </table>
     </mp-dialog>
 
-
     <script>
       orders = [
         ["asc", "Ascending"],
@@ -55,6 +57,58 @@
         ["5", "District 5"],
         ["6", "District 6"],
         ["7", "District 7"],
+      ];
+
+      var savings = [
+        ["January", "100"],
+        ["February", "130"],
+        ["March", "200"],
+        ["April", "180"],
+        ["May", "110"],
+        ["June", "90"],
+      ]
+
+      var members = [
+      {
+        "id": 1,
+        "first_name": "Jeanette",
+        "last_name": "Penddreth",
+        "email": "jpenddreth0@census.gov",
+        "gender": "Female",
+        "ip_address": "26.58.193.2"
+      }, {
+        "id": 2,
+        "first_name": "Giavani",
+        "last_name": "Frediani",
+        "email": "gfrediani1@senate.gov",
+        "gender": "Male",
+        "ip_address": "229.179.4.212"
+      }, {
+        "id": 3,
+        "first_name": "Noell",
+        "last_name": "Bea",
+        "email": "nbea2@imageshack.us",
+        "gender": "Female",
+        "ip_address": "180.66.162.255"
+      }, {
+        "id": 4,
+        "first_name": "Willard",
+        "last_name": "Valek",
+        "email": "wvalek3@vk.com",
+        "gender": "Male",
+        "ip_address": "67.76.188.26"
+      }];
+
+      var json = '[{"id": 1,"first_name": "Jeanette","last_name": "Penddreth","email": "jpenddreth0@census.gov","gender": "Female","ip_address": "26.58.193.2"},' + 
+      '{"id": 2,"first_name": "Giavani","last_name": "Frediani","email": "gfrediani1@senate.gov","gender": "Male","ip_address": "229.179.4.212"},' +
+      '{"id": 3,"first_name": "Noell","last_name": "Bea","email": "nbea2@imageshack.us","gender": "Female","ip_address": "180.66.162.255"},' +
+      '{"id": 4,"first_name": "Willard","last_name": "Valek","email": "wvalek3@vk.com","gender": "Male","ip_address": "67.76.188.26"}]';
+
+      var columns = [
+        {"data": "first_name", "display":"First Name"},
+        {"data": "last_name", "display":"Last Name"},
+        {"data": "email", "display":"Email"},
+        {"data": "gender", "display":"Gender"},
       ];
 
       var selectedName = "Michel Poirier";
@@ -128,24 +182,40 @@
           width: "400px",
           height: "400px",
         });
-
-        var hdr = document.querySelector('mp-dialog').shadowRoot.querySelector(".dialogheader");
-        hdr.style.color = "red";
-        
         dialog.addEventListener("closed", function (event) {
           console.log("Closed event fired: " + event.detail.value);
         });
-
         var btn = document.getElementById("btnDialog");
         btn.addEventListener("click", function (event) {
           dialog.show();
         });
+      
+        var table = document.getElementById("members");
+        table.init({
+          caption: "mpTable example",
+          themeUrl:'/css/w3.css',
+          theme: "w3-blue",
+          width: "600px",
+          height: "400px",
+          columns: columns,
+          //data: members, // initialize with array
+          //json: json, // initialize with JSON
+        });
+
+        function loadXMLDoc() {
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              table.fillTable(this.responseText, columns);
+            }
+          };
+          xhttp.open("GET", "MOCK_DATA.json", true);
+          xhttp.send();
+        }
+
+        loadXMLDoc();
+      
       })();
     </script>
-    <style>
-      mp-dialog::part(header) {
-        background-color: pink;
-      }
-    </style>
   </body>
 </html>

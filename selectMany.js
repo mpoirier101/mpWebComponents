@@ -11,7 +11,7 @@ class mpSelectMany extends HTMLElement {
 
     var placeholder = options.placeholder || me.getAttribute("placeholder") || "";
     var caption = options.caption || me.getAttribute("caption") || "";
-    var value = options.value || me.getAttribute("value") || "";
+    var value = options.value || (me.getAttribute("value") || "").split(',');
     var required = options.required || me.getAttribute("required") || "";
     var list = options.list || (me.getAttribute("list") || "").split(',');
 
