@@ -34,7 +34,7 @@
     if (me._themeUrl) { me.shadow.innerHTML += `<link rel="stylesheet" type="text/css" href="${me._themeUrl}">`; }
     me.shadow.innerHTML += `<div class="tableWrap"><table><thead></thead><tbody></tbody></table></div>`;
 
-    me.RowClickedEvent = new CustomEvent("rowClick", {
+    me.RowClickEvent = new CustomEvent("rowClick", {
       bubbles: true,
       cancelable: false,
       composed: true,
@@ -90,7 +90,9 @@
       columns.forEach(function (col, i) {
         var th = document.createElement('th');
         if (me._theme) th.classList.add(me._theme);
-        th.innerText = col.display;
+        th.innerHTML = col.display;
+        if (col.sort) th.innerHTML += (col.sort == 1) ? " &#9650;" : " &#9660;";
+
         th.addEventListener("click", function (e) {
           me._headClick(col.data);
         }, false);
@@ -103,8 +105,8 @@
       items.forEach(function (item, i) {
         var tr = document.createElement('tr');
         tr.addEventListener("click", function (e) {
-          me.RowClickedEvent.detail.value = this.id;
-          me.dispatchEvent(me.RowClickedEvent);
+          me.RowClickEvent.detail.value = this.id;
+          me.dispatchEvent(me.RowClickEvent);
         }, false);
           if (item.id) tr.setAttribute('id', item.id);
         columns.forEach(function (col, i) {
@@ -114,12 +116,6 @@
         });
         tbody.append(tr);
       });
-
-      //me.rows = me.shadow.querySelectorAll("tbody tr");
-      // me.rows.addEventListener("click", function (e) {
-      //   me.RowClickedEvent.detail.value = this.id;
-      //   me.dispatchEvent(me.RowClickedEvent);
-      // }, false);
     }
   }
 
@@ -132,6 +128,8 @@
       me._sortOrder = (me._sortOrder == 1) ? -1 : 1;
     }
     me._data.sort(dynamicSort(prop));
+    me._columns.map((x) => x.sort = "");
+    me._columns.find((x) => x.data == prop).sort = me._sortOrder;
     me._printTable();
 
     function dynamicSort(property) {
