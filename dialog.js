@@ -43,6 +43,13 @@ class mpDialog extends HTMLElement {
       detail: { value: "" },
     });
 
+    me.OpenedEvent = new CustomEvent("opened", {
+      bubbles: false,
+      cancelable: false,
+      composed: true,
+      detail: { value: "" },
+    });
+
     if (width) { me.style.width = width; }
     if (height) { me.style.height = height; }
 
@@ -62,8 +69,7 @@ class mpDialog extends HTMLElement {
       if (theme) me.footer.classList.add(theme);
       me.shadow.append(me.footer);
 
-      for (var i = 0; i < buttons.length; i++) {
-        var button = buttons[i];
+      buttons.forEach(function (button, i) {
         var btnName = "";
         switch (button) {
           case mpDialog.Buttons.OK:
@@ -82,7 +88,7 @@ class mpDialog extends HTMLElement {
         btn.value = button;
         btn.addEventListener("click", closeDialog);
         me.footer.append(btn);
-      }
+      });
     }
 
     function closeDialog(e) {
@@ -125,15 +131,16 @@ class mpDialog extends HTMLElement {
     }
   }
 
-  show() {
+  open() {
     this.style.display = "flex";
-    // set dialog position to screen center
-    var availHeight = document.querySelector("body").clientHeight;
-    var availWidth = document.querySelector("body").clientWidth;
     if (!this.style.top || !this.style.left) {
+      // set dialog position to screen center
+      var availHeight = document.querySelector("body").clientHeight;
+      var availWidth = document.querySelector("body").clientWidth;
       this.style.top = ((availHeight - this.offsetHeight) / 2) + "px";
       this.style.left = ((availWidth - this.offsetWidth) / 2) + "px";
     }
+    this.dispatchEvent(this.OpenedEvent);
   }
 
   close() {

@@ -44,7 +44,7 @@
     </mp-dialog>
 
     <script>
-      orders = [
+      var orders = [
         ["asc", "Ascending"],
         ["desc", "Descending"],
       ];
@@ -119,6 +119,9 @@
 
       (function () {
 
+        // ---------------------------------
+        // mp-text
+        // ---------------------------------
         var fullname = document.getElementById("fullname");
         fullname.init({
           value: selectedName,
@@ -131,6 +134,9 @@
           console.log("Changed event fired: " + event.detail.value);
         });
 
+        // ---------------------------------
+        // mp-select
+        // ---------------------------------
         var sort = document.getElementById("sort");
         sort.init({
           list: orders, 
@@ -140,6 +146,9 @@
           console.log("Changed event fired: " + event.detail.value);
         });
 
+        // ---------------------------------
+        // mp-selectmany
+        // ---------------------------------
         var district = document.getElementById("district");
         district.init({
           list: districts, 
@@ -149,6 +158,9 @@
           console.log("Changed event fired: " + event.detail.join(","));
         });
 
+        // ---------------------------------
+        // mp-date
+        // ---------------------------------
         var date = document.getElementById("date");
         date.init({
           value: selectedDate,
@@ -161,6 +173,9 @@
           console.log("Changed event fired: " + event.detail.value);
         });
 
+        // ---------------------------------
+        // mp-daterange
+        // ---------------------------------
         var dates = document.getElementById("dates");
         dates.init({
           value: selectedDates,
@@ -173,6 +188,9 @@
           console.log("Changed event fired: " + event.detail.join(","));
         });
 
+        // ---------------------------------
+        // mp-dialog
+        // ---------------------------------
         var dialog = document.getElementById("dialog");
         dialog.init({
           buttons: [mpDialog.Buttons.Cancel, mpDialog.Buttons.OK],
@@ -182,14 +200,21 @@
           width: "400px",
           height: "400px",
         });
+        dialog.addEventListener("opened", function (event) {
+          console.log("Opened event fired: " + event.detail.value);
+        });
         dialog.addEventListener("closed", function (event) {
           console.log("Closed event fired: " + event.detail.value);
         });
+
         var btn = document.getElementById("btnDialog");
         btn.addEventListener("click", function (event) {
-          dialog.show();
+          dialog.open();
         });
       
+        // ---------------------------------
+        // mp-table
+        // ---------------------------------
         var table = document.getElementById("members");
         table.init({
           caption: "mpTable example",
@@ -205,7 +230,10 @@
           console.log("Row Click event fired: " + event.detail.value);
         });
 
-        function loadXMLDoc() {
+        // ---------------------------------
+        // load sample json data from file
+        // ---------------------------------
+        function loadSampleData() {
           var xhttp = new XMLHttpRequest();
           xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
@@ -216,7 +244,7 @@
           xhttp.send();
         }
 
-        loadXMLDoc();
+        loadSampleData();
       
       })();
     </script>
