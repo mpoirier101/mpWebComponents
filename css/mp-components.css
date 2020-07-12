@@ -28,9 +28,12 @@ input[type=text], input[type=date] {
   text-overflow: ellipsis;;
 }
 
+.singleSelect:hover .singleSelect-content{display:block}
+
 .singleSelect-content {
   display: none;
   position: absolute;
+  cursor:auto;
   background-color: #f1f1f1;
   min-width: 160px;
   max-height: 400px;
@@ -43,13 +46,14 @@ input[type=text], input[type=date] {
 .singleSelect-content option {
   position: relative;
   cursor: pointer;
-  -webkit-appearance: checkbox;
   box-sizing: border-box;
   margin: 0;
   padding: 2px;
   border: 0;
   width: 100%;
 }
+
+.multiSelect:hover .multiSelect-content{display:block}
 
 .multiSelect-content {
   display: none;
@@ -65,7 +69,7 @@ input[type=text], input[type=date] {
 }
 .multiSelect-content div {
   position: relative;
-  cursor: pointer;
+  cursor: auto;
   -webkit-appearance: checkbox;
   box-sizing: border-box;
   margin: 0;

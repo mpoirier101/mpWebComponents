@@ -14,6 +14,7 @@ class mpSelectMany extends HTMLElement {
     var value = options.value || (me.getAttribute("value") || "").split(',');
     var required = options.required || me.getAttribute("required") || "";
     var list = options.list || (me.getAttribute("list") || "").split(',');
+    var descriptions = [];
 
     me.shadow = me.attachShadow({ mode: "open" });
     me.shadow.innerHTML = `<link rel="stylesheet" type="text/css" href="/css/mp-components.css">`;
@@ -29,18 +30,11 @@ class mpSelectMany extends HTMLElement {
     me.ctrl = me.shadow.querySelector("input[type=text]");
     if (placeholder) { me.ctrl.placeholder = placeholder; }
     if (required) { me.ctrl.required = true; }
-    me.ctrl.addEventListener("click", function (e) {
-      e.cancelBubble = true;
-      toggleEvent(e);
-    }, false);
 
     me.content = me.shadow.querySelector(".multiSelect-content");
-    me.content.addEventListener("mouseleave", function (e) {
+    me.content.addEventListener("click", function (e) {
       toggleEvent(e);
     }, false);
-
-    me.ChangedEvent.detail.length = 0;
-    var descriptions = [];
 
     if (list && list.length > 0) {
       list.forEach(function (item, i) {
@@ -70,33 +64,18 @@ class mpSelectMany extends HTMLElement {
     me.ctrl.value = desc;
     me.ctrl.title = desc;
 
-    window.addEventListener("click", function (e) {
-      if (e.target.id != me.id) {
-        closeContent(e);
-      }
-    }, false);
-
-    function closeContent(e) {
-      me.content.classList.remove("show");
-    }
-
     function toggleEvent(e) {
-      if (!me.content.classList.contains("show")) {
-        me.content.classList.add("show");
-      } else {
-        me.ChangedEvent.detail.length = 0;
-        var descriptions = [];
-        var selected = me.shadow.querySelectorAll("input:checked");
-        selected.forEach((checkbox) => {
-          me.ChangedEvent.detail.push(checkbox.value);
-          descriptions.push(checkbox.nextElementSibling.textContent);
-        });
-        var desc = descriptions.join(", ");
-        me.ctrl.value = desc;
-        me.ctrl.title = desc;
-        me.dispatchEvent(me.ChangedEvent);
-        me.content.classList.remove("show");
-      }
+      me.ChangedEvent.detail.length = 0;
+      var descriptions = [];
+      var selected = me.shadow.querySelectorAll("input:checked");
+      selected.forEach((checkbox) => {
+        me.ChangedEvent.detail.push(checkbox.value);
+        descriptions.push(checkbox.nextElementSibling.textContent);
+      });
+      var desc = descriptions.join(", ");
+      me.ctrl.value = desc;
+      me.ctrl.title = desc;
+      me.dispatchEvent(me.ChangedEvent);
     }
   }
 }

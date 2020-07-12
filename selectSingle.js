@@ -29,15 +29,8 @@ class mpSelectSingle extends HTMLElement {
     me.ctrl = me.shadow.querySelector("input[type=text]");
     if (placeholder) { me.ctrl.placeholder = placeholder; }
     if (required) { me.ctrl.required = true; }
-    me.ctrl.addEventListener("click", function (e) {
-      e.cancelBubble = true;
-      toggleEvent(e);
-    }, false);
 
     me.content = me.shadow.querySelector(".singleSelect-content");
-    me.content.addEventListener("mouseleave", function (e) {
-      closeContent(e);
-    }, false);
     me.content.addEventListener("click", function (e) {
       e.cancelBubble = true;
       toggleEvent(e);
@@ -58,28 +51,13 @@ class mpSelectSingle extends HTMLElement {
       });
     }
 
-    window.addEventListener("click", function (e) {
-      if (e.target.id != me.id) {
-        closeContent(e);
-      }
-    }, false);
-
-    function closeContent(e) {
-      me.content.classList.remove("show");
-    }
-
     function toggleEvent(e) {
-      if (!me.content.classList.contains("show")) {
-        me.content.classList.add("show");
-      } else {
-        var target = e.target;
-        if (target.tagName == "OPTION") {
-          me.ChangedEvent.detail.value = target.value;
-          me.ctrl.value = target.text;
-          me.ctrl.title = target.text;
-          me.dispatchEvent(me.ChangedEvent);
-        }
-        me.content.classList.remove("show");
+      var target = e.target;
+      if (target.tagName == "OPTION") {
+        me.ChangedEvent.detail.value = target.value;
+        me.ctrl.value = target.text;
+        me.ctrl.title = target.text;
+        me.dispatchEvent(me.ChangedEvent);
       }
     }
   }
