@@ -1,4 +1,4 @@
-# mpComponents
+# mpWebComponents
 
 Simple no-non-sense html components.
 
