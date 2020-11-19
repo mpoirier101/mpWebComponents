@@ -1,94 +1,83 @@
-/** {
-	box-sizing: border-box;
-}*/
+:root {
+	--primary-color: #047aed;
+	--secondary-color: #1c3fa8;
+	--dark-color: #002240;
+	--light-color: #f4f4f4;
+	--success-color: #5cb85c;
+	--error-color: #d9534f;
+}
 
-html, body {
-	font-family: "Segoe UI",Arial,sans-serif;
-	font-size: 12px;
-	line-height: 1.5;
+/* HTML */
+
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
 }
 
 body {
+	font-family: "Segoe UI",Arial,sans-serif;
+	font-size: 12px;
+	line-height: 1.5;
 	width: 100%;
 	height: 100vh;
-	margin: 0;
-	padding: 0px;
+	/* background-image: url("/images/thumbnail.jpg"); */
 }
 
-h1 {
-	font-size: 36px;
+ul {
+	list-style-type: none;
 }
 
+a {
+	text-decoration: none;
+	color: #333;
+}
+
+h1,
 h2 {
-	font-size: 30px;
-}
-
-h3 {
-	font-size: 24px;
-}
-
-h4 {
-	font-size: 20px;
-}
-
-h5 {
-	font-size: 18px;
-}
-
-h6 {
-	font-size: 16px;
-}
-
-h1, h2, h3, h4, h5, h6 {
-	font-weight: 400;
+	font-weight: 300;
+	line-height: 1.2;
 	margin: 10px 0;
 }
 
-table {
-  width: 100%;
+p {
+	margin: 10px 0;
 }
 
-input:invalid {
-	color: red;
+img {
+	width: 100%;
 }
 
-input:valid {
-	color: black;
+code,
+pre {
+	background: #333;
+	color: #fff;
+	padding: 10px;
 }
 
-svg > g > g:last-child {
-	pointer-events: none
+
+.pointer {
+	cursor: pointer;
 }
+
+.hidden {
+	visibility: hidden;
+	height: 0;
+}
+
+
+
 
 .mp-padleft {
-	padding-left:8px;
+	padding-left: 8px;
 }
 
-.mp-bold {
-	font-weight: bold;
-}
-
-.mp-hspace {
-  margin: 0 8px 0 0;
+.mp-padright {
+	padding-right: 8px;
 }
 
 .mp-padding-small {
 	padding: 8px 8px 8px 0 !important;
-}
-
-.mp-center {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.mp-table-caption {
-	padding: 8px;
-	caption-side: bottom;
-	text-align: left;
-}
-
-.mp-serif {
-	font-family: serif;
 }
 
 .mp-wide {
@@ -160,10 +149,28 @@ svg > g > g:last-child {
 	align-items: baseline;
 }
 
-.tabContent {
+.mp-tabs {
+	height: 42px;
+	margin: 0;
+}
+
+.mp-tabContent {
 	width: 100%;
 	height: auto;
 	margin: 0;
+}
+
+.mp-section {
+	display:inline-block;
+	background-color: white;
+	border: 1px dashed black;
+	padding: 2em;
+	margin: 2em;
+	width:auto;
+}
+
+.mp-auto-width {
+	width:auto !important;
 }
 
 .mp-footer {
@@ -176,16 +183,8 @@ svg > g > g:last-child {
 	z-index: 10;
 }
 
-
-#content1 {
-	width: 100%;
-	height: 100vh;
-	margin: 0;
-}
-
-#table {
-	position: relative;
-	z-index: 1;
+#headerLogo {
+	vertical-align: text-top;
 }
 
 #Logo {
@@ -196,27 +195,73 @@ svg > g > g:last-child {
 }
 
 #showSettings {
-	margin: 4px 16px 0 auto;
+	font-size: xx-large;
+	font-weight: 900;
+	line-height: 16px;
+	cursor: pointer;
 }
 
 #settings {
 	position: absolute;
-	top: 0;
-	right: 0;
-	width: 340px;
-	height: 99vh;
-	padding: 0.4em;
-	z-index: 9999;
-	box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+	top: 10px;
+	left: 10px;
+	width: 0;
+	height: 0;
+	padding: 0;
+	z-index: 99;
+	overflow: hidden;
+	transition: all 0.2s ease-in;
 }
+
+	#settings.zoom {
+		width: 340px;
+		height: 50vh;
+	}
+
+#register {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 0;
+	height: 0;
+	margin-top: 0;
+	margin-left: 0;
+	padding: 5px;
+	background-color: #fff;
+	z-index: 99;
+	overflow: hidden;
+	transition: all 0.2s;
+}
+
+	#register.zoom {
+		width: 30em;
+		height: 30em;
+		margin-top: -15em;
+		margin-left: -14em;
+	}
+
+#login {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 0;
+	height: 0;
+	margin-top: 0;
+	margin-left: 0;
+	padding: 5px;
+	background-color: #fff;
+	z-index: 99;
+	overflow: hidden;
+	transition: all 0.2s;
+}
+
+	#login.zoom {
+		width: 30em;
+		height: 32em;
+		margin-top: -11em;
+		margin-left: -15em;
+	}
 
 #tooltip {
 	z-index: 200;
 }
-
-.ui-widget {
-	font-family: "Segoe UI",Arial,sans-serif;
-	font-size: 13px;
-	line-height: 1.5;
-}
-

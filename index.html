@@ -3,19 +3,20 @@
   <head>
     <title>Components</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/w3.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="/css/mp.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="/css/mp-components.css" />
-    <script src="date.js"></script>
-    <script src="dateRange.js"></script>
-    <script src="selectSingle.js"></script>
-    <script src="selectMany.js"></script>
-    <script src="textBox.js"></script>
-    <script src="dialog.js"></script>
-    <script src="table.js"></script>
+    <script src="mpDate.js"></script>
+    <script src="mpDateRange.js"></script>
+    <script src="mpDialog.js"></script>
+    <script src="mpSelectSingle.js"></script>
+    <script src="mpSelectMany.js"></script>
+    <script src="mpTable.js"></script>
+    <script src="mpTextBox.js"></script>
   </head>
   <body>
     <h3>Test Components</h3>
+
+    <div id="mpCal" ></div>
 
     <div id="header" class="mp-nowrap-container mp-header">
       <mp-text id="fullname" class="mp-header-item"></mp-text>
@@ -31,7 +32,7 @@
     <mp-dialog id="dialog">
       <table>
         <thead>
-          <tr><th class="w3-blue">header</th></tr>
+          <tr><th class="blue">header</th></tr>
         </thead>
         <tbody>
           <tr>
@@ -194,8 +195,6 @@
         var dialog = document.getElementById("dialog");
         dialog.init({
           buttons: [mpDialog.Buttons.Cancel, mpDialog.Buttons.OK],
-          themeUrl:'/css/w3.css',
-          theme: "w3-blue",
           title: "Dialog Title",
           width: "400px",
           height: "400px",
@@ -218,8 +217,6 @@
         var table = document.getElementById("members");
         table.init({
           caption: "mpTable example",
-          themeUrl:'/css/w3.css',
-          theme: "w3-blue",
           width: "600px",
           height: "400px",
           columns: columns,

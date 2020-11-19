@@ -1,9 +1,47 @@
+:root {
+	--primary-color: #000;
+	--secondary-color: #808080;
+	--dark-color: #333;
+	--light-color: #fff;
+	--success-color: #5cb85c;
+	--error-color: #d9534f;
+}
+
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+.theme {
+  background-color: var(--primary-color);
+  color: var(--light-color);
+}
+
+.show {display: block;}
+.hide {display: none;}
 
 :focus {
   outline: none;
   outline-offset: 0;
 }
-input[type=text], input[type=date] {
+
+.form-inline {  
+  display: flex;
+	flex-direction: row;
+  flex-flow: row wrap;
+	/* flex-wrap: nowrap; */
+  align-items: center;
+}
+
+:focus {
+  outline: none;
+  outline-offset: 0;
+}
+input {
+  width:200px;
+}
+input[type=text], input[type=date], input[type=tel], input[type=number], input[type=email] {
   writing-mode: horizontal-tb !important;
   text-rendering: auto;
   letter-spacing: normal;
@@ -20,12 +58,13 @@ input[type=text], input[type=date] {
   font: 400 12px "Segoe UI";
   padding: 1px 2px;
   border-width: 1px;
-  border-style: solid ;
+  border-style: solid;
   border-color: gray;
   border-image: none;
-  height:20px;
+  height: 20px;
   overflow: hidden;
-  text-overflow: ellipsis;;
+  text-overflow: ellipsis;
+  ;
 }
 
 .singleSelect:hover .singleSelect-content{display:block}
@@ -136,7 +175,7 @@ input[type=text], input[type=date] {
 }
 
 .tableWrap {
-  margin-left: 100px;
+  margin-left: auto;
   margin-right: auto;
   padding: 0;
   overflow: auto;

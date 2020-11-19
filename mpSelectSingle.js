@@ -7,8 +7,10 @@ class mpSelectSingle extends HTMLElement {
   // disconnectedCallback() {}
 
   init(options = {}) {
+    const parent = this.parentElement;
     const me = this;
 
+    var name = options.name || me.getAttribute("name") || "";
     var placeholder = options.placeholder || me.getAttribute("placeholder") || "";
     var caption = options.caption || me.getAttribute("caption") || "";
     var value = options.value || me.getAttribute("value") || "";
@@ -25,6 +27,11 @@ class mpSelectSingle extends HTMLElement {
       composed: true,
       detail: { value: "" },
     });
+
+    var input = document.createElement('input');
+    input.setAttribute('type', 'hidden');
+    input.name = name;
+    parent.append(input);
 
     me.ctrl = me.shadow.querySelector("input[type=text]");
     if (placeholder) { me.ctrl.placeholder = placeholder; }
@@ -43,6 +50,7 @@ class mpSelectSingle extends HTMLElement {
         option.value = item[0];
         option.text = item[1];
         if (value == item[0]) {
+          input.value = item[0];
           me.ctrl.value = item[1];
           me.ctrl.title = item[1];
           me.ChangedEvent.detail.value = item[0];
@@ -54,6 +62,7 @@ class mpSelectSingle extends HTMLElement {
     function toggleEvent(e) {
       var target = e.target;
       if (target.tagName == "OPTION") {
+        input.value = target.value;
         me.ChangedEvent.detail.value = target.value;
         me.ctrl.value = target.text;
         me.ctrl.title = target.text;

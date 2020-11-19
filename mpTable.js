@@ -22,7 +22,6 @@
   
     width = options.width || me.getAttribute("width") || "100%";
     height = options.height || me.getAttribute("height") || "";
-    themeUrl = options.themeUrl;
     
     me._theme = options.theme || "";
     me._columns = options.columns || [];
@@ -31,7 +30,6 @@
 
     me.shadow = me.attachShadow({ mode: "open" });
     me.shadow.innerHTML = `<link rel="stylesheet" type="text/css" href="/css/mp-components.css">`;
-    if (themeUrl) { me.shadow.innerHTML += `<link rel="stylesheet" type="text/css" href="${themeUrl}">`; }
     me.shadow.innerHTML += `<div class="tableWrap"><table><thead></thead><tbody></tbody></table></div>`;
 
     me.RowClickEvent = new CustomEvent("rowClick", {
@@ -51,7 +49,7 @@
       me._data = JSON.parse(json);
     }
     if (me._data) {
-      this._printTable(me._data, me._columns);
+      me._printTable(me._data, me._columns);
     }
   }
 
@@ -71,7 +69,7 @@
         me._columns = JSON.parse(columns);
       }
     }
-    this._printTable();
+    me._printTable();
   }
 
   _printTable() {
@@ -87,55 +85,82 @@
       var tr = document.createElement('tr');
       columns.forEach(function (col, i) {
         var th = document.createElement('th');
-        if (me._theme) th.classList.add(me._theme);
+        th.classList.add("theme");
         th.innerHTML = col.display;
         if (col.sort) th.innerHTML += (col.sort == 1) ? " &#9650;" : " &#9660;";
+
         th.addEventListener("click", function (e) {
-          headClick(col.data);
+          headClick(col);
         }, false);
+
         tr.append(th);
       });
       thead.append(tr);
     }
 
     function printRows(tbody, items, columns) {
-      items.forEach(function (item, i) {
+      const me = this;
+      items.forEach(function (item) {
         var tr = document.createElement('tr');
         if (item.id) {
           tr.setAttribute('id', item.id);
+
           tr.addEventListener("click", function (e) {
-            me.RowClickEvent.detail.value = this.id;
-            me.dispatchEvent(me.RowClickEvent);
+            rowClick(this);
           }, false);
-        }  
+
+        }
         columns.forEach(function (col, i) {
           var td = document.createElement('td');
-          td.innerText = item[col.data] || "";
+          td.innerText = eval("item." + col.data);
           tr.append(td);
         });
         tbody.append(tr);
       });
     }
 
-    function headClick(prop) {
-      if (prop != me._sortProp) {
-        me._sortProp = prop;
+    function rowClick(row) {
+      me.selectRow(row.id);
+      me.RowClickEvent.detail.value = row.id;
+      me.dispatchEvent(me.RowClickEvent);
+    }
+
+    function headClick(col) {
+      if (col.data != me._sortProp) {
+        me._sortProp = col.data;
         me._sortOrder = 1;
       } else {
         me._sortOrder = (me._sortOrder == 1) ? -1 : 1;
       }
-      me._data.sort(dynamicSort(prop));
+      me._data.sort(dynamicSort(col.data));
       me._columns.map((x) => x.sort = "");
-      me._columns.find((x) => x.data == prop).sort = me._sortOrder;
+      me._columns.find((x) => x.data == col.data).sort = me._sortOrder;
       me._printTable();
-  
-      function dynamicSort(property) {
-        return function (a, b) {
-          var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
-          return result * me._sortOrder;
-        }
+    }
+
+    function dynamicSort(property) {
+      return function (a, b) {
+        var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+        return result * me._sortOrder;
       }
     }
-   }
+  }
+
+  selectRow(id) {
+    const me = this;
+    if (me._theme) {
+      var rows = me.shadow.querySelectorAll('tbody tr');
+      rows.forEach(function (row) {
+        if (row.id == id) {
+          row.classList.add(me._theme);
+          row.scrollIntoView();
+        } else {
+          row.classList.remove(me._theme);
+				}
+      });
+		}
+    //me.RowClickEvent.detail.value = row.id;
+    //me.dispatchEvent(me.RowClickEvent);
+	}
 }
 window.customElements.define("mp-table", mpTable);
